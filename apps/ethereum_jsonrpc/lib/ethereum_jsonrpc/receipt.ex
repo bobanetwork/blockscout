@@ -117,7 +117,8 @@ defmodule EthereumJSONRPC.Receipt do
           created_contract_address_hash: String.t() | nil,
           status: status(),
           transaction_hash: String.t(),
-          transaction_index: non_neg_integer()
+          transaction_index: non_neg_integer(),
+          l2_boba_fee: non_neg_integer(),
         }
   def elixir_to_params(
         %{
@@ -125,7 +126,8 @@ defmodule EthereumJSONRPC.Receipt do
           "gasUsed" => gas_used,
           "contractAddress" => created_contract_address_hash,
           "transactionHash" => transaction_hash,
-          "transactionIndex" => transaction_index
+          "transactionIndex" => transaction_index,
+          "l2BobaFee" => l2_boba_fee,
         } = elixir
       ) do
     status = elixir_to_status(elixir)
@@ -136,7 +138,8 @@ defmodule EthereumJSONRPC.Receipt do
       created_contract_address_hash: created_contract_address_hash,
       status: status,
       transaction_hash: transaction_hash,
-      transaction_index: transaction_index
+      transaction_index: transaction_index,
+      l2_boba_fee: l2_boba_fee,
     }
   end
 
@@ -258,7 +261,7 @@ defmodule EthereumJSONRPC.Receipt do
 
   # l1GasUsed l1GasPrice l1Fee are from Optimstic Rollups l2Geth
   defp entry_to_elixir({key, quantity})
-       when key in ~w(blockNumber cumulativeGasUsed gasUsed transactionIndex l1GasUsed l1GasPrice l1Fee) do
+       when key in ~w(blockNumber cumulativeGasUsed gasUsed transactionIndex l1GasUsed l1GasPrice l1Fee l2BobaFee) do
     result =
       if is_nil(quantity) do
         nil
@@ -314,7 +317,7 @@ defmodule EthereumJSONRPC.Receipt do
   end
 
   # Arbitrum fields
-  defp entry_to_elixir({key, _}) when key in ~w(returnData returnCode feeStats l1BlockNumber l2BobaFee) do
+  defp entry_to_elixir({key, _}) when key in ~w(returnData returnCode feeStats l1BlockNumber) do
     :ignore
   end
 

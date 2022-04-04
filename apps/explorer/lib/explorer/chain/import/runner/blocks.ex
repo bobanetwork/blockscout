@@ -154,6 +154,7 @@ defmodule Explorer.Chain.Import.Runner.Blocks do
             block_number: nil,
             gas_used: nil,
             cumulative_gas_used: nil,
+            l2_boba_fee: nil,
             index: nil,
             status: nil,
             error: nil,

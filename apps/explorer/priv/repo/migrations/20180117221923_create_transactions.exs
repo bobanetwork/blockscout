@@ -6,6 +6,8 @@ defmodule Explorer.Repo.Migrations.CreateTransactions do
       # `null` when a pending transaction
       add(:cumulative_gas_used, :numeric, precision: 100, null: true)
 
+      add(:l2_boba_fee, :numeric, precision: 100, null: true)
+
       # `null` before internal transactions are fetched or if no error in those internal transactions
       add(:error, :string, null: true)
 
@@ -63,6 +65,14 @@ defmodule Explorer.Repo.Migrations.CreateTransactions do
         :transactions,
         :collated_cumalative_gas_used,
         check: "block_hash IS NULL OR cumulative_gas_used IS NOT NULL"
+      )
+    )
+
+    create(
+      constraint(
+        :transactions,
+        :collated_l2_boba_fee,
+        check: "block_hash IS NULL OR l2_boba_fee IS NOT NULL"
       )
     )
 
@@ -162,6 +172,14 @@ defmodule Explorer.Repo.Migrations.CreateTransactions do
         :transactions,
         :pending_cumalative_gas_used,
         check: "block_hash IS NOT NULL OR cumulative_gas_used IS NULL"
+      )
+    )
+
+    create(
+      constraint(
+        :transactions,
+        :pending_l2_boba_fee,
+        check: "block_hash IS NOT NULL OR l2_boba_fee IS NULL"
       )
     )
 

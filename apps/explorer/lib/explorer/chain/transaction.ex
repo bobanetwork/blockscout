@@ -29,7 +29,7 @@ defmodule Explorer.Chain.Transaction do
 
   alias Explorer.Chain.Transaction.{Fork, Status}
 
-  @optional_attrs ~w(block_hash block_number created_contract_address_hash cumulative_gas_used earliest_processing_start
+  @optional_attrs ~w(block_hash block_number created_contract_address_hash cumulative_gas_used l2_boba_fee earliest_processing_start
                      error gas_used index created_contract_code_indexed_at status
                      to_address_hash revert_reason)a
 
@@ -86,6 +86,7 @@ defmodule Explorer.Chain.Transaction do
      populated only when `to_address_hash` is nil.
    * `cumulative_gas_used` - the cumulative gas used in `transaction`'s `t:Explorer.Chain.Block.t/0` before
      `transaction`'s `index`.  `nil` when transaction is pending
+  * `l2_boba_fee` - boba fee
    * `earliest_processing_start` - If the pending transaction fetcher was alive and received this transaction, we can
       be sure that this transaction did not start processing until after the last time we fetched pending transactions,
       so we annotate that with this field. If it is `nil`, that means we don't have a lower bound for when it started
@@ -141,6 +142,7 @@ defmodule Explorer.Chain.Transaction do
           created_contract_address_hash: Hash.Address.t() | nil,
           created_contract_code_indexed_at: DateTime.t() | nil,
           cumulative_gas_used: Gas.t() | nil,
+          l2_boba_fee: Wei.t() | nil,
           earliest_processing_start: DateTime.t() | nil,
           error: String.t() | nil,
           forks: %Ecto.Association.NotLoaded{} | [Fork.t()],
@@ -170,6 +172,7 @@ defmodule Explorer.Chain.Transaction do
            only: [
              :block_number,
              :cumulative_gas_used,
+             :l2_boba_fee,
              :error,
              :gas,
              :gas_price,
@@ -190,6 +193,7 @@ defmodule Explorer.Chain.Transaction do
            only: [
              :block_number,
              :cumulative_gas_used,
+             :l2_boba_fee,
              :error,
              :gas,
              :gas_price,
@@ -210,6 +214,7 @@ defmodule Explorer.Chain.Transaction do
   schema "transactions" do
     field(:block_number, :integer)
     field(:cumulative_gas_used, :decimal)
+    field(:l2_boba_fee, Wei)
     field(:earliest_processing_start, :utc_datetime_usec)
     field(:error, :string)
     field(:gas, :decimal)
@@ -577,7 +582,7 @@ defmodule Explorer.Chain.Transaction do
     where(query, [t], is_nil(t.error) or t.error != "dropped/replaced")
   end
 
-  @collated_fields ~w(block_number cumulative_gas_used gas_used index)a
+  @collated_fields ~w(block_number cumulative_gas_used l2_boba_fee gas_used index)a
 
   @collated_message "can't be blank when the transaction is collated into a block"
   @collated_field_to_check Enum.into(@collated_fields, %{}, fn collated_field ->

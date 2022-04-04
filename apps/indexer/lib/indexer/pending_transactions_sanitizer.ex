@@ -168,6 +168,7 @@ defmodule Indexer.PendingTransactionsSanitizer do
         pending_tx
         |> Transaction.changeset()
         |> Changeset.put_change(:cumulative_gas_used, tx_info["cumulativeGasUsed"])
+        |> Changeset.put_change(:l2_boba_fee, tx_info["l2BobaFee"])
         |> Changeset.put_change(:gas_used, tx_info["gasUsed"])
         |> Changeset.put_change(:index, tx_info["transactionIndex"])
         |> Changeset.put_change(:block_number, block_number)

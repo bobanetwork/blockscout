@@ -334,6 +334,7 @@ defmodule Explorer.Etherscan do
     block_number
     created_contract_address_hash
     cumulative_gas_used
+    l2_boba_fee
     from_address_hash
     gas
     gas_price
@@ -351,6 +352,7 @@ defmodule Explorer.Etherscan do
   @pending_transaction_fields ~w(
     created_contract_address_hash
     cumulative_gas_used
+    l2_boba_fee
     from_address_hash
     gas
     gas_price
@@ -473,6 +475,7 @@ defmodule Explorer.Etherscan do
           transaction_gas_price: t.gas_price,
           transaction_gas_used: t.gas_used,
           transaction_cumulative_gas_used: t.cumulative_gas_used,
+          transaction_l2_boba_fee: t.l2_boba_fee,
           transaction_input: t.input,
           block_hash: b.hash,
           block_number: b.number,

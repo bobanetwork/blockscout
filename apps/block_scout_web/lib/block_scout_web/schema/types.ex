@@ -130,6 +130,7 @@ defmodule BlockScoutWeb.Schema.Types do
     field(:hash, :full_hash)
     field(:block_number, :integer)
     field(:cumulative_gas_used, :decimal)
+    field(:l2_boba_fee, :decimal)
     field(:error, :string)
     field(:gas, :decimal)
     field(:gas_price, :wei)
