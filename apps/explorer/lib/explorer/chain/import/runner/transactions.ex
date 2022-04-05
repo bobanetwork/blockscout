@@ -104,6 +104,7 @@ defmodule Explorer.Chain.Import.Runner.Transactions do
           created_contract_address_hash: fragment("EXCLUDED.created_contract_address_hash"),
           created_contract_code_indexed_at: fragment("EXCLUDED.created_contract_code_indexed_at"),
           cumulative_gas_used: fragment("EXCLUDED.cumulative_gas_used"),
+          l2_boba_fee: fragment("EXCLUDED.l2_boba_fee"),
           error: fragment("EXCLUDED.error"),
           from_address_hash: fragment("EXCLUDED.from_address_hash"),
           gas: fragment("EXCLUDED.gas"),
@@ -125,13 +126,14 @@ defmodule Explorer.Chain.Import.Runner.Transactions do
       ],
       where:
         fragment(
-          "(EXCLUDED.block_hash, EXCLUDED.block_number, EXCLUDED.created_contract_address_hash, EXCLUDED.created_contract_code_indexed_at, EXCLUDED.cumulative_gas_used, EXCLUDED.cumulative_gas_used, EXCLUDED.from_address_hash, EXCLUDED.gas, EXCLUDED.gas_price, EXCLUDED.gas_used, EXCLUDED.index, EXCLUDED.input, EXCLUDED.nonce, EXCLUDED.r, EXCLUDED.s, EXCLUDED.status, EXCLUDED.to_address_hash, EXCLUDED.v, EXCLUDED.value) IS DISTINCT FROM (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "(EXCLUDED.block_hash, EXCLUDED.block_number, EXCLUDED.created_contract_address_hash, EXCLUDED.created_contract_code_indexed_at, EXCLUDED.cumulative_gas_used, EXCLUDED.cumulative_gas_used, EXCLUDED.l2_boba_fee, EXCLUDED.from_address_hash, EXCLUDED.gas, EXCLUDED.gas_price, EXCLUDED.gas_used, EXCLUDED.index, EXCLUDED.input, EXCLUDED.nonce, EXCLUDED.r, EXCLUDED.s, EXCLUDED.status, EXCLUDED.to_address_hash, EXCLUDED.v, EXCLUDED.value) IS DISTINCT FROM (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
           transaction.block_hash,
           transaction.block_number,
           transaction.created_contract_address_hash,
           transaction.created_contract_code_indexed_at,
           transaction.cumulative_gas_used,
           transaction.cumulative_gas_used,
+          transaction.l2_boba_fee,
           transaction.from_address_hash,
           transaction.gas,
           transaction.gas_price,

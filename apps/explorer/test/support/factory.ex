@@ -241,6 +241,7 @@ defmodule Explorer.Factory do
     next_transaction_index = block_hash_to_next_transaction_index(block_hash)
 
     cumulative_gas_used = collated_params[:cumulative_gas_used] || Enum.random(21_000..100_000)
+    l2_boba_fee = collated_params[:l2_boba_fee] || Enum.random(21_000..100_000)
     gas_used = collated_params[:gas_used] || Enum.random(21_000..100_000)
     status = Keyword.get(collated_params, :status, Enum.random([:ok, :error]))
 
@@ -251,6 +252,7 @@ defmodule Explorer.Factory do
       block_hash: block_hash,
       block_number: block_number,
       cumulative_gas_used: cumulative_gas_used,
+      l2_boba_fee: l2_boba_fee,
       from_address_hash: transaction.from_address_hash,
       to_address_hash: transaction.to_address_hash,
       error: error,

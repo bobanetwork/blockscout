@@ -196,6 +196,7 @@ defmodule Indexer.Fetcher.UncleBlock do
         index: nil,
         gas_used: nil,
         cumulative_gas_used: nil,
+        l2_boba_fee: nil,
         status: nil
       })
     end)
