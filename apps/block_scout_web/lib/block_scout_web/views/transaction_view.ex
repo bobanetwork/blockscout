@@ -322,12 +322,21 @@ defmodule BlockScoutWeb.TransactionView do
   end
 
   def formatted_fee(%Transaction{} = transaction, opts) do
-    transaction
-    |> Chain.fee(:wei)
-    |> fee_to_denomination(opts)
-    |> case do
-      {:actual, value} -> value
-      {:maximum, value} -> "#{gettext("Max of")} #{value}"
+    {_, value} = Chain.bobaFee(transaction, :wei)
+    if value != 0 do
+      Chain.bobaFee(transaction, :wei)
+      |> fee_to_denomination(denomination: :boba)
+      |> case do
+        {:actual, value} -> value
+        {:maximum, value} -> "#{gettext("Max of")} #{value}"
+      end
+    else
+      Chain.fee(transaction,:wei)
+      |> fee_to_denomination(opts)
+      |> case do
+        {:actual, value} -> value
+        {:maximum, value} -> "#{gettext("Max of")} #{value}"
+      end
     end
   end
 
