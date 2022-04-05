@@ -87,7 +87,7 @@
                   <% else %>
                     <%= render BlockScoutWeb.FormView, "_tag.html", text: formatted_status, additional_classes: ["success", "large"] %></span>
                   <% end %>
-                
+
                 <%= if confirmations > 0 do %>
                   <span class="bs-label large ml-2 confirmations-label"><%= gettext "Confirmed by " %><span data-selector="block-confirmations"><%= confirmations %></span><%= " " <> confirmations_ds_name(confirmations) %></span>
                 <% end %>
@@ -186,7 +186,7 @@
                   <%= link(
                     recipient_address_hash,
                     to: address_path(@conn, :show, recipient_address_hash)
-                  ) %> 
+                  ) %>
                   &nbsp;<%= gettext("created") %>]
                   <%= render BlockScoutWeb.CommonComponentsView, "_btn_copy.html",
                     additional_classes: ["btn-copy-icon-small", "btn-copy-icon-custom", "btn-copy-icon-no-borders"],
@@ -301,7 +301,7 @@
             <dd class="col-sm-9 col-lg-10">
               <%= formatted_fee(@transaction, denomination: :ether) %>
 
-              <%= if !empty_exchange_rate?(@exchange_rate) do %>
+              <%= if !empty_exchange_rate?(@exchange_rate) && !isBobaFee(@transaction) do %>
                 (<span data-wei-value=<%= fee(@transaction) %> data-usd-exchange-rate=<%= @exchange_rate.usd_value %>></span>)
               <% end %>
             </dd>

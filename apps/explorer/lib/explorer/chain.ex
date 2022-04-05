@@ -946,21 +946,18 @@ defmodule Explorer.Chain do
   end
 
   @spec bobaFee(%Transaction{l2_boba_fee: nil}, :ether | :gwei | :wei) :: {:maximum, Decimal.t()}
-  def bobaFee(%Transaction{gas: gas, gas_price: gas_price, l2_boba_fee: nil}, unit) do
+  def bobaFee(%Transaction{gas_price: gas_price, l2_boba_fee: nil}, unit) do
     fee =
       gas_price
       |> Wei.to(unit)
-      |> Decimal.mult(0)
+      |> Decimal.mult(Decimal.new(0))
 
     {:maximum, fee}
   end
 
   @spec bobaFee(%Transaction{l2_boba_fee: Decimal.t()}, :ether | :gwei | :wei) :: {:actual, Decimal.t()}
-  def bobaFee(%Transaction{gas_price: gas_price, l2_boba_fee: l2_boba_fee}, unit) do
-    fee =
-      gas_price
-      |> Wei.to(unit)
-      |> Decimal.mult(l2_boba_fee)
+  def bobaFee(%Transaction{l2_boba_fee: l2_boba_fee}, unit) do
+    fee = Wei.to(l2_boba_fee,unit)
 
     {:actual, fee}
   end
@@ -2962,7 +2959,7 @@ defmodule Explorer.Chain do
         if range_start <= range_end do
           range
         else
-          %Range{first: last, last: first, step: 1}
+          %Range{first: last, last: first}
         end
       end)
 

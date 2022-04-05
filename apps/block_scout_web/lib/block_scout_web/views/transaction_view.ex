@@ -323,7 +323,7 @@ defmodule BlockScoutWeb.TransactionView do
 
   def formatted_fee(%Transaction{} = transaction, opts) do
     {_, value} = Chain.bobaFee(transaction, :wei)
-    if value != 0 do
+    if Decimal.to_integer(value) != 0 do
       Chain.bobaFee(transaction, :wei)
       |> fee_to_denomination(denomination: :boba)
       |> case do
@@ -350,6 +350,11 @@ defmodule BlockScoutWeb.TransactionView do
 
   def empty_exchange_rate?(exchange_rate) do
     Token.null?(exchange_rate)
+  end
+
+  def isBobaFee(%Transaction{} = transaction) do
+    {_, value} = Chain.bobaFee(transaction, :wei)
+    Decimal.to_integer(value) != 0
   end
 
   def formatted_status(status) do
