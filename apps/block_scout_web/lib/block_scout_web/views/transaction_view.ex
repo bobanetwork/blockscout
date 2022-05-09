@@ -325,7 +325,7 @@ defmodule BlockScoutWeb.TransactionView do
     {_, value} = Chain.bobaFee(transaction, :wei)
     if Decimal.to_integer(value) != 0 do
       Chain.bobaFee(transaction, :wei)
-      |> fee_to_denomination(denomination: :boba)
+      |> fee_to_denomination(denomination: :glmr)
       |> case do
         {:actual, value} -> value
         {:maximum, value} -> "#{gettext("Max of")} #{value}"
