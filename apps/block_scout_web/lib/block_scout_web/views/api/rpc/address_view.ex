@@ -96,7 +96,7 @@ defmodule BlockScoutWeb.API.RPC.AddressView do
       "input" => "#{transaction.input}",
       "contractAddress" => "#{transaction.created_contract_address_hash}",
       "cumulativeGasUsed" => "#{transaction.cumulative_gas_used}",
-      "l2BobaFee" => "#{transaction.l2_boba_fee}",
+      "l2BobaFee" => "#{transaction.l2_boba_fee.value}",
       "gasUsed" => "#{transaction.gas_used}"
     }
   end
@@ -119,7 +119,7 @@ defmodule BlockScoutWeb.API.RPC.AddressView do
       "input" => "#{transaction.input}",
       "contractAddress" => "#{transaction.created_contract_address_hash}",
       "cumulativeGasUsed" => "#{transaction.cumulative_gas_used}",
-      "l2BobaFee" => "#{transaction.l2_boba_fee}",
+      "l2BobaFee" => "#{transaction.l2_boba_fee.value}",
       "gasUsed" => "#{transaction.gas_used}",
       "confirmations" => "#{transaction.confirmations}"
     }
@@ -163,7 +163,7 @@ defmodule BlockScoutWeb.API.RPC.AddressView do
       "gasPrice" => to_string(token_transfer.transaction_gas_price.value),
       "gasUsed" => to_string(token_transfer.transaction_gas_used),
       "cumulativeGasUsed" => to_string(token_transfer.transaction_cumulative_gas_used),
-      "l2BobaFee" => "#{token_transfer.transaction_l2_boba_fee}",
+      "l2BobaFee" => to_string("#{token_transfer.transaction_l2_boba_fee.value}"),
       "input" => to_string(token_transfer.transaction_input),
       "confirmations" => to_string(token_transfer.confirmations)
     }
