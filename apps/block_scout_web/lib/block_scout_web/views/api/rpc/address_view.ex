@@ -163,7 +163,7 @@ defmodule BlockScoutWeb.API.RPC.AddressView do
       "gasPrice" => to_string(token_transfer.transaction_gas_price.value),
       "gasUsed" => to_string(token_transfer.transaction_gas_used),
       "cumulativeGasUsed" => to_string(token_transfer.transaction_cumulative_gas_used),
-      "l2BobaFee" => to_string("#{token_transfer.transaction_l2_boba_fee.value}"),
+      "l2BobaFee" => to_string(token_transfer.transaction_l2_boba_fee.value),
       "input" => to_string(token_transfer.transaction_input),
       "confirmations" => to_string(token_transfer.confirmations)
     }
