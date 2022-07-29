@@ -73,8 +73,12 @@ defmodule BlockScoutWeb.WeiHelpers do
     end
   end
 
+  defp l1_token_symbol do
+    Application.get_env(:block_scout_web, :l1_token_symbol)
+  end
+
   defp display_unit(:wei), do: gettext("Wei")
   defp display_unit(:gwei), do: gettext("Gwei")
   defp display_unit(:ether), do: gettext("Boba")
-  defp display_unit(:boba), do: gettext("GLMR")
+  defp display_unit(:boba), do: l1_token_symbol()
 end

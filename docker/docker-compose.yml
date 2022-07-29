@@ -31,6 +31,7 @@ services:
       ETHEREUM_JSONRPC_HTTP_URL: 'http://host.docker.internal:8545'
       ETHEREUM_JSONRPC_WS_URL: 'ws://host.docker.internal:8546'
       BLOCKSCOUT_VERSION: '1.0.0'
+      L1_TOKEN_SYMBOL: "BOBA"
     ports:
       - 4000:4000
     extra_hosts:

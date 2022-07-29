@@ -103,6 +103,9 @@ endif
 ifdef RELEASE_LINK
 	BLOCKSCOUT_CONTAINER_PARAMS += -e 'RELEASE_LINK=$(RELEASE_LINK)'
 endif
+ifdef L1_TOKEN_SYMBOL
+	BLOCKSCOUT_CONTAINER_PARAMS += -e 'L1_TOKEN_SYMBOL=$(L1_TOKEN_SYMBOL)'
+endif
 ifdef ELIXIR_VERSION
 	BLOCKSCOUT_CONTAINER_PARAMS += -e 'ELIXIR_VERSION=$(ELIXIR_VERSION)'
 endif
@@ -280,7 +283,7 @@ ifdef CUSTOM_CONTRACT_ADDRESSES_TEST_TOKEN
 endif
 
 HAS_BLOCKSCOUT_IMAGE := $(shell docker images | grep -sw ${DOCKER_IMAGE})
-build: 
+build:
 	@echo "==> Checking for blockscout image $(DOCKER_IMAGE)"
 ifdef HAS_BLOCKSCOUT_IMAGE
 	@echo "==> Image exist. Using $(DOCKER_IMAGE)"
@@ -324,7 +327,7 @@ else
 	@$(MAKE) -f $(THIS_FILE) migrate_only
 endif
 
-start: build postgres 
+start: build postgres
 	@echo "==> Starting blockscout"
 	@docker run --rm --name $(BS_CONTAINER_NAME) \
 					$(BLOCKSCOUT_CONTAINER_PARAMS) \
@@ -337,4 +340,4 @@ run: start
 				migrate \
 				start \
 				postgres \
-				run 
+				run
