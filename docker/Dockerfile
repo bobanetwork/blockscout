@@ -38,7 +38,6 @@ RUN cd apps/block_scout_web/assets/ && \
     cd -
 
 RUN cd apps/explorer/ && \
-    npm install && \
-    apk update
+    npm install
 
 RUN mix phx.digest
